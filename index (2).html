@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolBox Pro - All-in-One Online Tools | Free & Fast</title>
+    <meta name="description" content="ToolBox Pro - Free online tools including QR code generator, image compressor, PDF converter, text tools, unit converter, password generator, color picker, JSON formatter, and more!">
+    <meta name="keywords" content="online tools, QR code generator, image compressor, PDF converter, text tools, unit converter, password generator, free tools">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <i class="fas fa-toolbox"></i>
+                    <span>ToolBox Pro</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>All-in-One Online Tools</h1>
+                <p>Free, fast, and powerful tools for your daily needs</p>
+                <button class="btn btn-primary" onclick="document.getElementById('tools').scrollIntoView({behavior: 'smooth'})">Explore Tools</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="tools-section">
+        <div class="container">
+            <h2>Our Tools</h2>
+            <div class="tools-grid">
+                <!-- QR Code Generator -->
+                <div class="tool-card" onclick="switchTool('qr')">
+                    <i class="fas fa-qrcode"></i>
+                    <h3>QR Code Generator</h3>
+                    <p>Generate QR codes from text or URLs</p>
+                </div>
+
+                <!-- Image Compressor -->
+                <div class="tool-card" onclick="switchTool('compress')">
+                    <i class="fas fa-image"></i>
+                    <h3>Image Compressor</h3>
+                    <p>Compress images without losing quality</p>
+                </div>
+
+                <!-- Text Tools -->
+                <div class="tool-card" onclick="switchTool('text')">
+                    <i class="fas fa-font"></i>
+                    <h3>Text Tools</h3>
+                    <p>Word count, case converter, and more</p>
+                </div>
+
+                <!-- Unit Converter -->
+                <div class="tool-card" onclick="switchTool('unit')">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Unit Converter</h3>
+                    <p>Convert temperature, weight, distance</p>
+                </div>
+
+                <!-- Password Generator -->
+                <div class="tool-card" onclick="switchTool('password')">
+                    <i class="fas fa-lock"></i>
+                    <h3>Password Generator</h3>
+                    <p>Create strong and secure passwords</p>
+                </div>
+
+                <!-- Color Picker -->
+                <div class="tool-card" onclick="switchTool('color')">
+                    <i class="fas fa-palette"></i>
+                    <h3>Color Picker</h3>
+                    <p>Pick and convert colors easily</p>
+                </div>
+
+                <!-- JSON Formatter -->
+                <div class="tool-card" onclick="switchTool('json')">
+                    <i class="fas fa-code"></i>
+                    <h3>JSON Formatter</h3>
+                    <p>Format and validate JSON data</p>
+                </div>
+
+                <!-- Base64 Encoder -->
+                <div class="tool-card" onclick="switchTool('base64')">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Base64 Encoder</h3>
+                    <p>Encode and decode Base64 strings</p>
+                </div>
+
+                <!-- Markdown to HTML -->
+                <div class="tool-card" onclick="switchTool('markdown')">
+                    <i class="fas fa-markdown"></i>
+                    <h3>Markdown to HTML</h3>
+                    <p>Convert Markdown to HTML</p>
+                </div>
+
+                <!-- URL Encoder -->
+                <div class="tool-card" onclick="switchTool('url')">
+                    <i class="fas fa-link"></i>
+                    <h3>URL Encoder</h3>
+                    <p>Encode and decode URLs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool Interface -->
+    <section class="tool-interface">
+        <div class="container">
+            <!-- QR Code Generator -->
+            <div id="qr-tool" class="tool-content active">
+                <h2>QR Code Generator</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Enter Text or URL:</label>
+                        <textarea id="qr-input" placeholder="Enter text or URL..." rows="4"></textarea>
+                        <button class="btn btn-primary" onclick="generateQR()">Generate QR Code</button>
+                    </div>
+                    <div class="output-group">
+                        <div id="qr-output"></div>
+                        <button class="btn btn-secondary" id="qr-download" style="display:none;" onclick="downloadQR()">Download QR Code</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Compressor -->
+            <div id="compress-tool" class="tool-content">
+                <h2>Image Compressor</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Select Image:</label>
+                        <input type="file" id="compress-input" accept="image/*" onchange="previewImage()">
+                        <input type="range" id="quality-slider" min="10" max="100" value="80" oninput="updateQuality()">
+                        <span id="quality-value">80%</span>
+                        <button class="btn btn-primary" onclick="compressImage()">Compress Image</button>
+                    </div>
+                    <div class="output-group">
+                        <canvas id="compress-output" style="display:none;"></canvas>
+                        <button class="btn btn-secondary" id="compress-download" style="display:none;" onclick="downloadCompressed()">Download Compressed Image</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Tools -->
+            <div id="text-tool" class="tool-content">
+                <h2>Text Tools</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Enter Text:</label>
+                        <textarea id="text-input" placeholder="Enter your text..." rows="6" oninput="updateTextStats()"></textarea>
+                        <div class="text-stats">
+                            <span>Words: <strong id="word-count">0</strong></span>
+                            <span>Characters: <strong id="char-count">0</strong></span>
+                            <span>Lines: <strong id="line-count">0</strong></span>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="convertCase('upper')">UPPERCASE</button>
+                        <button class="btn btn-secondary" onclick="convertCase('lower')">lowercase</button>
+                        <button class="btn btn-secondary" onclick="convertCase('title')">Title Case</button>
+                        <button class="btn btn-secondary" onclick="copyToClipboard()">Copy</button>
+                    </div>
+                    <div class="output-group">
+                        <label>Output:</label>
+                        <textarea id="text-output" readonly rows="6"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unit Converter -->
+            <div id="unit-tool" class="tool-content">
+                <h2>Unit Converter</h2>
+                <div class="tool-body">
+                    <div class="converter-group">
+                        <div class="input-group">
+                            <label>Temperature Converter</label>
+                            <input type="number" id="temp-input" placeholder="Enter value" oninput="convertTemperature()">
+                            <select id="temp-from">
+                                <option value="c">Celsius</option>
+                                <option value="f">Fahrenheit</option>
+                                <option value="k">Kelvin</option>
+                            </select>
+                        </div>
+                        <div class="output-group">
+                            <label>Result:</label>
+                            <input type="text" id="temp-output" readonly>
+                        </div>
+                    </div>
+                    <div class="converter-group">
+                        <div class="input-group">
+                            <label>Weight Converter</label>
+                            <input type="number" id="weight-input" placeholder="Enter value" oninput="convertWeight()">
+                            <select id="weight-from">
+                                <option value="kg">Kilogram</option>
+                                <option value="lb">Pound</option>
+                                <option value="g">Gram</option>
+                            </select>
+                        </div>
+                        <div class="output-group">
+                            <label>Result:</label>
+                            <input type="text" id="weight-output" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Generator -->
+            <div id="password-tool" class="tool-content">
+                <h2>Password Generator</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Password Length:</label>
+                        <input type="range" id="pwd-length" min="8" max="32" value="16" oninput="updatePwdLength()">
+                        <span id="pwd-length-value">16</span>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" id="pwd-upper" checked> Uppercase</label>
+                            <label><input type="checkbox" id="pwd-lower" checked> Lowercase</label>
+                            <label><input type="checkbox" id="pwd-numbers" checked> Numbers</label>
+                            <label><input type="checkbox" id="pwd-symbols" checked> Symbols</label>
+                        </div>
+                        <button class="btn btn-primary" onclick="generatePassword()">Generate Password</button>
+                    </div>
+                    <div class="output-group">
+                        <input type="text" id="password-output" readonly>
+                        <button class="btn btn-secondary" onclick="copyPassword()">Copy Password</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Picker -->
+            <div id="color-tool" class="tool-content">
+                <h2>Color Picker</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Pick a Color:</label>
+                        <input type="color" id="color-input" value="#3498db" oninput="updateColor()">
+                        <div class="color-display" id="color-display"></div>
+                    </div>
+                    <div class="output-group">
+                        <label>Color Codes:</label>
+                        <input type="text" id="hex-output" readonly placeholder="HEX">
+                        <input type="text" id="rgb-output" readonly placeholder="RGB">
+                        <button class="btn btn-secondary" onclick="copyColor('hex')">Copy HEX</button>
+                        <button class="btn btn-secondary" onclick="copyColor('rgb')">Copy RGB</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JSON Formatter -->
+            <div id="json-tool" class="tool-content">
+                <h2>JSON Formatter</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Enter JSON:</label>
+                        <textarea id="json-input" placeholder="Paste JSON here..." rows="6"></textarea>
+                        <button class="btn btn-primary" onclick="formatJSON()">Format JSON</button>
+                    </div>
+                    <div class="output-group">
+                        <label>Formatted Output:</label>
+                        <textarea id="json-output" readonly rows="6"></textarea>
+                        <button class="btn btn-secondary" onclick="copyJSON()">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Base64 Encoder -->
+            <div id="base64-tool" class="tool-content">
+                <h2>Base64 Encoder/Decoder</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Enter Text:</label>
+                        <textarea id="base64-input" placeholder="Enter text to encode..." rows="4"></textarea>
+                        <button class="btn btn-primary" onclick="encodeBase64()">Encode</button>
+                        <button class="btn btn-secondary" onclick="decodeBase64()">Decode</button>
+                    </div>
+                    <div class="output-group">
+                        <label>Output:</label>
+                        <textarea id="base64-output" readonly rows="4"></textarea>
+                        <button class="btn btn-secondary" onclick="copyBase64()">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Markdown to HTML -->
+            <div id="markdown-tool" class="tool-content">
+                <h2>Markdown to HTML</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Enter Markdown:</label>
+                        <textarea id="markdown-input" placeholder="Enter markdown..." rows="6"></textarea>
+                        <button class="btn btn-primary" onclick="convertMarkdown()">Convert</button>
+                    </div>
+                    <div class="output-group">
+                        <label>HTML Output:</label>
+                        <textarea id="markdown-output" readonly rows="6"></textarea>
+                        <button class="btn btn-secondary" onclick="copyMarkdown()">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- URL Encoder -->
+            <div id="url-tool" class="tool-content">
+                <h2>URL Encoder/Decoder</h2>
+                <div class="tool-body">
+                    <div class="input-group">
+                        <label>Enter URL or Text:</label>
+                        <textarea id="url-input" placeholder="Enter URL or text..." rows="4"></textarea>
+                        <button class="btn btn-primary" onclick="encodeURL()">Encode</button>
+                        <button class="btn btn-secondary" onclick="decodeURL()">Decode</button>
+                    </div>
+                    <div class="output-group">
+                        <label>Output:</label>
+                        <textarea id="url-output" readonly rows="4"></textarea>
+                        <button class="btn btn-secondary" onclick="copyURL()">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>About ToolBox Pro</h2>
+            <p>ToolBox Pro is a collection of free, fast, and easy-to-use online tools designed to make your daily tasks simpler. All tools work directly in your browser - no installation needed!</p>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Lightning Fast</h4>
+                    <p>All processing happens in your browser</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-lock"></i>
+                    <h4>100% Secure</h4>
+                    <p>Your data is never stored on our servers</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Mobile Friendly</h4>
+                    <p>Works perfectly on all devices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ToolBox Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Markdown Library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
